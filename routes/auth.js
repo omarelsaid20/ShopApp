@@ -4,11 +4,13 @@ const { check, body } = require('express-validator/check');
 const authController = require('../controllers/auth');
 const User = require('../models/user');
 
+const isNotAuth = require('../middleware/is-not-auth');
+
 const router = express.Router();
 
-router.get('/login', authController.getLogin);
+router.get('/login',  isNotAuth,authController.getLogin);
 
-router.get('/signup', authController.getSignup);
+router.get('/signup',  isNotAuth,authController.getSignup);
 
 router.post(
   '/login',
@@ -32,10 +34,6 @@ router.post(
       .isEmail()
       .withMessage('Please enter a valid email.')
       .custom((value, { req }) => {
-        // if (value === 'test@test.com') {
-        //   throw new Error('This email address if forbidden.');
-        // }
-        // return true;
         return User.findOne({ email: value }).then(userDoc => {
           if (userDoc) {
             return Promise.reject(

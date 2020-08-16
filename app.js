@@ -22,12 +22,25 @@ const store = new MongoDBStore({
 });
 const csrfProtection = csrf();
 
+
+function GetFormattedDate() {
+  var todayTime = new Date();
+  var month = todayTime.getMonth() + 1;
+  var day = todayTime.getDate();
+  var year = todayTime.getFullYear();
+  var hour = todayTime.getHours();
+  var minutes = todayTime.getMinutes();
+  var seconds = todayTime.getSeconds();
+  var miliseconds = todayTime.getMilliseconds();
+  return month + "" + day + "" + year + '' + hour + '' + minutes + '' + seconds + '' + miliseconds;
+}
+
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
-    cb(null, 'new Date().toISOString()' + '-' + file.originalname);
+    cb(null, GetFormattedDate() + '-' + file.originalname);
   }
 });
 
@@ -49,6 +62,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const { use } = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -66,6 +80,7 @@ app.use(
 );
 app.use(csrfProtection);
 app.use(flash());
+
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
@@ -90,6 +105,15 @@ app.use((req, res, next) => {
       next(new Error(err));
     });
 });
+
+app.use((req, res, next) => {
+  var userName = null;
+  if (req.session.isLoggedIn) {
+    userName = req.user.userName;
+  }
+  res.locals.currentUser = userName;
+  next();
+})
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

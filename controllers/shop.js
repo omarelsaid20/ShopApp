@@ -6,7 +6,7 @@ const PDFDocument = require('pdfkit');
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 9;
 
 exports.getProducts = (req, res, next) => {
   const page = +req.query.page || 1;
@@ -21,7 +21,7 @@ exports.getProducts = (req, res, next) => {
         .limit(ITEMS_PER_PAGE);
     })
     .then(products => {
-      res.render('shop/product-list', {
+      res.render('shop/shop', {
         prods: products,
         pageTitle: 'Products',
         path: '/products',
@@ -41,6 +41,7 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
+
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
@@ -58,6 +59,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+
   const page = +req.query.page || 1;
   let totalItems;
 
@@ -72,7 +74,7 @@ exports.getIndex = (req, res, next) => {
     .then(products => {
       res.render('shop/index', {
         prods: products,
-        pageTitle: 'Shop',
+        pageTitle: 'Home',
         path: '/',
         currentPage: page,
         hasNextPage: ITEMS_PER_PAGE * page < totalItems,
@@ -175,6 +177,7 @@ exports.getOrders = (req, res, next) => {
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
+        currentUser: req.user.userName,
         orders: orders
       });
     })

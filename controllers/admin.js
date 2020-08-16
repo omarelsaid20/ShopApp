@@ -5,11 +5,19 @@ const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator/check');
 
 const Product = require('../models/product');
+const user = require('../models/user');
 
 exports.getAddProduct = (req, res, next) => {
+
+  let userName = null;
+  if (req.session.isLoggedIn) {
+    userName = req.user.userName;
+  }
+
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
+    currentUser: userName,
     editing: false,
     hasError: false,
     errorMessage: null,
@@ -19,9 +27,13 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
+  const category = req.body.category;
   const image = req.file;
   const price = req.body.price;
   const description = req.body.description;
+
+  console.log(category)
+
   if (!image) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
