@@ -1,0 +1,55 @@
+<%- include('../includes/head.ejs') %>
+
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <!-- Product Shop Section Begin -->
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row">
+                <%- include('../includes/user-sidebar.ejs') %>
+
+                <div class="col-lg-8 order-1 order-lg-2">
+                    <!-- <span>Edit Profile</span> -->
+                    <div class="card edit-profile">
+                        <h5 class="card-header text-center ">Edit Profile</h5>
+                        <form class="col-lg-12 centered" style="padding: 20px;">
+                            <div class="form-group">
+                                <label for="change-username">Change UserName</label>
+                                <input type="text" class="form-control" id="change-username" placeholder="UserName"
+                                    value="<%= userName %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="change-email">Change Email</label>
+                                <input type="email" class="form-control" id="change-email" placeholder="Enter email" value="<%= email %>">
+                            </div>
+                            <hr>
+                            <h5 class="card-title text-center">Change Password</h5>
+                            <hr>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="current-password">Current Password</label>
+                                    <input type="password" class="form-control" id="current-password"
+                                        placeholder="Password">
+                                </div>
+                                <div class="col">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" class="form-control" id="new-password"
+                                        placeholder="New Password">
+                                </div>
+                                <div class="col">
+                                    <label for="confirm-password">Comfirm Password</label>
+                                    <input type="password" class="form-control" id="confirm-password"
+                                        placeholder="Confirm Password">
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Shop Section End -->
+    <%- include('../includes/end.ejs') %></div>

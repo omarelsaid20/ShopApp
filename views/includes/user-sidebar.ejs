@@ -1,0 +1,24 @@
+<div class="col-lg-4 col-md-6 col-sm-12 order-1 order-lg-1 user-sidebar">
+    <div class="card">
+        <img class="card-img-top" src="../../images/user.jpg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title"><%= currentUser %></h5>
+            <div class="list-group">
+                <a href="/admin"
+                    class="list-group-item list-group-item-action <%= path === '/admin' ? 'active' : '' %>">
+                    My Products
+                </a>
+                <a href="/admin/add-product" class="list-group-item list-group-item-action ">Add New
+                    Product</a>
+                <a href="/admin/edit-profile"
+                    class="list-group-item list-group-item-action <%= path === '/admin/edit-profile' ? 'active' : '' %>">
+                    Edit Profile
+                </a>
+                <a href="/cart" class="list-group-item list-group-item-action">Shoping Cart</a>
+                <a href="/orders" class="list-group-item list-group-item-action">My Orders</a>
+                <a href="#" class="list-group-item list-group-item-action disabled">My Product's
+                    Orders</a>
+            </div>
+        </div>
+    </div>
+</div>
