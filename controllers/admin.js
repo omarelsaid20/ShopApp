@@ -5,7 +5,38 @@ const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator/check');
 
 const Product = require('../models/product');
-const user = require('../models/user');
+const User = require('../models/user');
+
+exports.getAdmin = (req, res, next) => {
+  Product.find({ userId: req.user._id })
+    .then(products => {
+      console.log(products);
+      res.render('admin/account-products', {
+        prods: products,
+        pageTitle: 'My Account',
+        path: '/admin'
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+
+};
+
+exports.getEditProfile = (req, res, next) => {
+  User.findById(req.user._id)
+    .then(user => {
+      console.log(user.userName);
+      res.render('admin/account-info', {
+        pageTitle: 'Edit Profile',
+        path: '/admin/edit-profile',
+        userName: user.userName,
+        email: user.email
+      });
+    })
+};
 
 exports.getAddProduct = (req, res, next) => {
 
@@ -71,8 +102,8 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = image.path;
 
   const product = new Product({
-    // _id: new mongoose.Types.ObjectId('5badf72403fd8b5be0366e81'),
     title: title,
+    category: category,
     price: price,
     description: description,
     imageUrl: imageUrl,
@@ -83,7 +114,7 @@ exports.postAddProduct = (req, res, next) => {
     .then(result => {
       // console.log(result);
       console.log('Created Product');
-      res.redirect('/admin/products');
+      res.redirect('/admin');
     })
     .catch(err => {
       // return res.status(500).render('admin/edit-product', {
@@ -187,14 +218,12 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find({ userId: req.user._id })
-    // .select('title price -_id')
-    // .populate('userId', 'name')
     .then(products => {
       console.log(products);
-      res.render('admin/products', {
+      res.render('admin/account-products', {
         prods: products,
         pageTitle: 'Admin Products',
-        path: '/admin/products'
+        path: '/admin'
       });
     })
     .catch(err => {
