@@ -12,6 +12,7 @@ router.get('/', isAuth, adminController.getAdmin)
 
 router.get('/edit-profile', isAuth, adminController.getEditProfile);
 
+//post request
 // router.post('/edit-profile', isAuth, adminController.postEditPost)
 
 // /admin/add-product => GET
