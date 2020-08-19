@@ -12,6 +12,8 @@ const multer = require('multer');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
+const port = process.env.PORT || 8080;
+
 const MONGODB_URI =
   'mongodb+srv://omar:omar.0123@cluster0-ib5pg.mongodb.net/shop?retryWrites=true&w=majority';
 
@@ -62,6 +64,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
+const { env } = require('process');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -135,7 +138,7 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI)
   .then(result => {
-    app.listen(8080);
+    app.listen(port);
   })
   .catch(err => {
     console.log(err);
