@@ -152,8 +152,8 @@
                         <% if (prods.length > 0) { %>
                         <div class="row">
                             <% for (let product of prods) { %>
-                            <div class="col-lg-4 col-sm-6">
-                                <div class="product-item">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                                <div class="product-item" id="product-list">
                                     <div class="pi-pic">
                                         <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
                                         <div class="sale pp-sale">Sale</div>
@@ -161,9 +161,15 @@
                                             <i class="icon_heart_alt"></i>
                                         </div>
                                         <ul>
-                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            <li class="w-icon active"><a href="/products/<%= product._id %>">View</a></li>
+                                            <!-- <li class="quick-view"><a
+                                                    href="/admin/edit-product/<%= product._id %>?edit=true"> Cart</a>
+                                            </li> -->
+                                            <li class="w-icon">
+                                                <% if (isAuthenticated) { %>
+                                                <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                                                <% } %>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="pi-text">

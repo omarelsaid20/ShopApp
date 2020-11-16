@@ -1,7 +1,7 @@
 const path = require('path');
 
 const express = require('express');
-const { body } = require('express-validator/check');
+const { body, check } = require('express-validator/check');
 
 const adminController = require('../controllers/admin');
 const isAuth = require('../middleware/is-auth');
@@ -13,7 +13,28 @@ router.get('/', isAuth, adminController.getAdmin)
 router.get('/edit-profile', isAuth, adminController.getEditProfile);
 
 //post request
-// router.post('/edit-profile', isAuth, adminController.postEditPost)
+router.post('/edit-profile',
+  [
+    body('username')
+      .isString()
+      .isLength({ min: 4 })
+      .trim(),
+    body(
+      'new_password',
+      'Please enter a password with only numbers and text and at least 5 characters.'
+    )
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+      .trim(),
+    body('confirm_password')
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.new_password) {
+          throw new Error('Passwords have to match!');
+        }
+        return true;
+      })
+  ], isAuth, adminController.postEditProfile)
 
 // /admin/add-product => GET
 router.get('/add-product', isAuth, adminController.getAddProduct);

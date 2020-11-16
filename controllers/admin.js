@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const fileHelper = require('../util/file');
 
@@ -25,18 +26,81 @@ exports.getAdmin = (req, res, next) => {
 
 };
 
+
+
 exports.getEditProfile = (req, res, next) => {
   User.findById(req.user._id)
     .then(user => {
-      console.log(user.userName);
       res.render('admin/account-info', {
+        errorMessage: null,
         pageTitle: 'Edit Profile',
         path: '/admin/edit-profile',
-        userName: user.userName,
-        email: user.email
+        oldInput: {
+          userName: user.userName,
+          email: user.email,
+          oldPassword: null,
+          newPassword: null,
+          confirmPassword: null
+        }
       });
     })
 };
+
+exports.postEditProfile = (req, res, next) => {
+  const userName = req.body.username;
+  const email = req.body.email;
+  const oldPassword = req.body.old_password;
+  const newPassword = req.body.new_password;
+  const confirmPassword = req.body.confirm_password;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render('admin/account-info', {
+      path: '/admin/edit-profile',
+      pageTitle: 'Edit Profile',
+      errorMessage: errors.array()[0].msg,
+      oldInput: {
+        userName: userName,
+        email: email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword
+      },
+      validationErrors: errors.array()
+    });
+  }
+
+ User.findById(req.user._id).then(user => {
+
+  bcrypt.compare(oldPassword, user.password).then(isMatch => {
+    if (isMatch) {
+      return true
+    }
+    return res.status(404).render('admin/account-info', {
+      errorMessage: 'Old password is not valid',
+      pageTitle: 'Edit Profile',
+      path: '/admin/edit-profile',
+      oldInput: {
+        userName: userName,
+        email: email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword
+      }
+    });
+  })
+  bcrypt.hash(newPassword, 12).then(hashedPassword => {
+    user.userName = userName;
+    user.email = email;
+    user.password = hashedPassword;
+
+    user.save().then(result => {
+      res.status(200).redirect('/admin');
+    })
+   })
+ })
+}
 
 exports.getAddProduct = (req, res, next) => {
 

@@ -23,7 +23,90 @@
 /* Template default CSS
 /*----------------------------------------*/
 
+.product-view {
+	margin: 100px 0;
+}
 
+.product-big-img {
+	margin: auto;
+	width: 90%;
+	height: 100%;
+}
+
+.add-to-cart {
+	padding: 16px 18px 12px 19px;
+	border: none;
+	background-color: white;
+}
+
+.home-head {
+	background-image: url('../img/hero-1.jpg');
+	/* height: 720px; */
+}
+
+.some-words {
+	margin-top: 150px;
+	height: 500px;
+}
+
+.dropdown-mobile {
+	display: none;
+	margin-top: 10px
+}
+
+.dropdown-content {
+	width: 100%;
+	height: 0px;
+	margin: auto;
+	z-index: 10;
+	display: none;
+	position: relative;
+	background-color: #4c4c4c;
+	min-width: 160px;
+	overflow: auto;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+	transition: display 2s ease-in;
+}
+
+.dropdown-content ul {
+	list-style: none;
+	/* margin: 10px; */
+}
+
+.dropdown-content ul li a {
+	color: white;
+}
+
+.grandLi {
+	padding: 5px;
+	transition: background-color 0.4s ease-out;
+	border-radius: 2px;
+}
+
+.grandLi:hover {
+	background-color: #004D39;
+}
+
+.subLi {
+	margin-left: 13px;
+	padding: 5px;
+	transition: background-color 0.5s ease-out;
+	border-radius: 2px;
+}
+
+.subLi:hover {
+	background-color: #004D39;
+}
+
+.dropdown-mobile .btn {
+	background-color: #158467;
+	color: white;
+	border: none;
+	/* width: 50%; */
+	float: right;
+	border-radius: 0;
+}
 
 .user-sidebar .card img {
 	border-radius: 50%;
@@ -51,6 +134,11 @@
 	border-color: #158467;
 }
 
+.edit-profile {
+	box-shadow: 5px 5px 10px -10px rgba(0,0,0,0.75);
+	border-radius: 5px;
+}
+
 .edit-profile .btn {
 	background-color: #158467;
 	color: white;
@@ -59,7 +147,7 @@
 	padding: 9px;
 }
 
-.edit-profile .btn:hover{
+.edit-profile .btn:hover {
 	background-color: #197163;
 }
 
@@ -1069,6 +1157,7 @@ ul, ol {
 }
 
 .product-large {
+	background-image: url('../img/products/women-large.jpg');
 	height: 620px;
 	margin-left: -15px;
 	margin-right: -15px;
@@ -3904,15 +3993,12 @@ ul, ol {
 	.product-item .pi-pic ul li a {
 		padding: 16px 12px 12px 11px;
 	}
-
 	.product-item .pi-pic img {
 		height: 300px;
 	}
-
 	.nav-item .nav-menu li a {
 		padding: 16px 45px 15px;
 	}
-
 	.user-sidebar .card {
 		width: 18rem;
 	}
@@ -4083,6 +4169,16 @@ ul, ol {
 /* Large Device: 480px */
 
 @media only screen and (max-width: 767px) {
+	.edit-profile {
+		margin-top: 50px;
+	}
+	#dropdown-mobile {
+		display: block;
+	}
+	.show {
+		display: block;
+		height: 100%;
+	}
 	img {
 		max-width: 100%;
 	}

@@ -9,41 +9,50 @@
             <div class="row">
                 <%- include('../includes/user-sidebar.ejs') %>
 
-                <div class="col-lg-8 order-1 order-lg-2">
+                <div class="col-lg-8 order-1 order-lg-2 edit-profile">
                     <!-- <span>Edit Profile</span> -->
-                    <div class="card edit-profile">
+                    <div class="card ">
                         <h5 class="card-header text-center ">Edit Profile</h5>
-                        <form class="col-lg-12 centered" style="padding: 20px;">
+                        <form class="col-lg-12 centered" style="padding: 20px;" method="POST"
+                            action="/admin/edit-profile">
+                            <% if (errorMessage) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= errorMessage %>
+                            </div>
+                            <% } %>
                             <div class="form-group">
                                 <label for="change-username">Change UserName</label>
                                 <input type="text" class="form-control" id="change-username" placeholder="UserName"
-                                    value="<%= userName %>">
+                                    value="<%= oldInput.userName %>" name="username">
                             </div>
                             <div class="form-group">
                                 <label for="change-email">Change Email</label>
-                                <input type="email" class="form-control" id="change-email" placeholder="Enter email" value="<%= email %>">
+                                <input type="email" name="email" class="form-control" id="change-email"
+                                    placeholder="Enter email" value="<%= oldInput.email %>">
                             </div>
                             <hr>
                             <h5 class="card-title text-center">Change Password</h5>
                             <hr>
                             <div class="form-row">
-                                <div class="col">
-                                    <label for="current-password">Current Password</label>
-                                    <input type="password" class="form-control" id="current-password"
-                                        placeholder="Password">
+                                <div class="col-lg-4 col-md-12">
+                                    <label for="old-password">Old Password</label>
+                                    <input type="password" class="form-control" id="old-password" placeholder="Password"
+                                        , name="old_password" value="<%= oldInput.oldPassword %>">
                                 </div>
-                                <div class="col">
+                                <div class="col-lg-4 col-md-12">
                                     <label for="new-password">New Password</label>
                                     <input type="password" class="form-control" id="new-password"
-                                        placeholder="New Password">
+                                        placeholder="New Password" name="new_password" value="<%= oldInput.newPassword %>">
                                 </div>
-                                <div class="col">
+                                <div class="col-lg-4 col-md-12">
                                     <label for="confirm-password">Comfirm Password</label>
                                     <input type="password" class="form-control" id="confirm-password"
-                                        placeholder="Confirm Password">
+                                        placeholder="Confirm Password" name="confirm_password"
+                                        value="<%= oldInput.confirmPassword %>">
                                 </div>
 
                             </div>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button type="submit" class="btn">Submit</button>
                         </form>
                     </div>

@@ -72,7 +72,7 @@ exports.getIndex = (req, res, next) => {
         .limit(ITEMS_PER_PAGE);
     })
     .then(products => {
-      res.render('shop/index', {
+      res.render('shop/home', {
         prods: products,
         pageTitle: 'Home',
         path: '/',
