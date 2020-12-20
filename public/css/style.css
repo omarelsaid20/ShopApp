@@ -2779,14 +2779,13 @@ ul, ol {
 .cart-table table tr td {
 	text-align: center;
 	padding-bottom: 34px;
+	border-bottom: 1px solid #d3d3d3;
 }
 
-.cart-table table tr td.first-row {
-	padding-top: 30px;
-}
 
 .cart-table table tr td.cart-pic {
-	width: 21%;
+	padding: 23px;
+	width: 17%;
 }
 
 .cart-table table tr td.cart-title {
@@ -2821,8 +2820,6 @@ ul, ol {
 }
 
 .cart-table table tr td.qua-col .pro-qty {
-	width: 123px;
-	height: 46px;
 	border: 2px solid #ebebeb;
 	padding: 0 15px;
 	float: left;

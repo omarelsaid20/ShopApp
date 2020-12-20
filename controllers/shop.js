@@ -97,10 +97,19 @@ exports.getCart = (req, res, next) => {
     .execPopulate()
     .then(user => {
       const products = user.cart.items;
+
+      let totalPrice = 0;
+      products.map(p => {
+        totalPrice += p.quantity * p.productId.price;
+        console.log(totalPrice);
+      })
+      // console.log(products);
+
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: products
+        products: products,
+        totalPrice: totalPrice.toFixed(2)
       });
     })
     .catch(err => {
