@@ -15,7 +15,7 @@ const User = require('./models/user');
 const port = process.env.PORT || 8080;
 
 const MONGODB_URI =
-  'mongodb+srv://omar:omar.0123@cluster0-ib5pg.mongodb.net/shop?retryWrites=true&w=majority';
+  'mongodb+srv://omar:omar.0123@cluster0.ib5pg.mongodb.net/shop?retryWrites=true&w=majority';
 
 const app = express();
 const store = new MongoDBStore({
